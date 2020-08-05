@@ -1,19 +1,49 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Display />
+    <Keys v-bind:values="values" v-bind:callback="doSomething" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Keys from "./components/Keys.vue";
+import Display from "./components/Display.vue";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      values: [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        "+",
+        "-",
+        "*",
+        "/",
+        ".",
+        "C",
+        "+/-",
+      ],
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    Keys,
+    Display,
+  },
+  methods: {
+    doSomething() {
+      console.log("button clicked");
+    },
+  },
+};
 </script>
 
 <style>
