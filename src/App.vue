@@ -100,7 +100,7 @@ export default {
           this.add();
           break;
         case "-":
-          this.minus;
+          this.minus();
           break;
         case "/":
           this.divide();
@@ -116,6 +116,9 @@ export default {
           break;
         case "C":
           this.clearAll();
+          break;
+        case "%":
+          this.percent();
           break;
         default:
           console.log("blabla");
@@ -137,5 +140,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  width: 33%;
+  margin: auto;
 }
 </style>
