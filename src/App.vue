@@ -15,10 +15,70 @@ export default {
     return {
       displayedValue: "",
       sign: "",
-      savedValue: 0,
+      savedValue: null,
+      operator: null,
+      operatorClicked: false,
+      end: false,
     };
   },
   methods: {
+    clearAll() {
+      this.displayedValue = "";
+    },
+    assignNegativeOrPositive() {
+      if (this.displayedValue !== "")
+        this.displayedValue =
+          this.displayedValue.charAt(0) === "-"
+            ? this.displayedValue.slice(1)
+            : `-${this.displayedValue}`;
+    },
+    percent() {
+      this.displayedValue = `${parseFloat(this.displayedValue) / 100}`;
+    },
+    append(number) {
+      if (number === "0" && this.displayedValue === "")
+        this.displayedValue = "";
+      else {
+        if (this.operatorClicked) {
+          this.displayedValue = "";
+          this.operatorClicked = false;
+        }
+        this.displayedValue = `${this.displayedValue}${number}`;
+      }
+    },
+    saveValue() {
+      this.savedValue = this.displayedValue;
+      this.operatorClicked = true;
+    },
+    divide() {
+      this.operator = (a, b) => a / b;
+      this.saveValue();
+      this.sign = "÷";
+    },
+    times() {
+      this.operator = (a, b) => a * b;
+      this.saveValue();
+      this.sign = "x";
+    },
+    minus() {
+      this.operator = (a, b) => a - b;
+      this.saveValue();
+      this.sign = "-";
+    },
+    add() {
+      this.operator = (a, b) => a + b;
+      this.saveValue();
+      this.sign = "+";
+    },
+    equal() {
+      this.displayedValue = this.operator(
+        parseFloat(this.savedValue),
+        parseFloat(this.displayedValue)
+      );
+      this.savedValue = null;
+      this.sign = "";
+      this.end = true;
+    },
     handleTypedKey(value) {
       switch (value) {
         case "1":
@@ -31,27 +91,31 @@ export default {
         case "8":
         case "9":
         case "0":
+          this.append(parseInt(value));
+          break;
         case ".":
-          this.displayedValue = `${this.displayedValue}${value}`;
+          if (this.displayedValue.indexOf(".") === -1) this.append(".");
           break;
         case "+":
+          this.add();
+          break;
         case "-":
+          this.minus;
+          break;
         case "/":
-          this.sign = value;
-          this.savedValue = parseFloat(this.displayedValue);
-          this.displayedValue = "";
-          console.log(this.savedValue);
-          console.log(this.sign);
+          this.divide();
           break;
         case "x":
-          this.sign = "*";
-          this.savedValue = parseFloat(this.displayedValue);
-          this.displayedValue = "";
-          console.log(this.savedValue);
-          console.log(this.sign);
+          this.times();
           break;
         case "=":
-          this.displayedValue = "";
+          this.equal();
+          break;
+        case "+/-":
+          this.assignNegativeOrPositive();
+          break;
+        case "C":
+          this.clearAll();
           break;
         default:
           console.log("blabla");
