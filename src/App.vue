@@ -140,7 +140,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  width: 33%;
+  width: 300px;
   margin: auto;
+  margin-top: 5%;
+  height: 450px;
 }
 </style>
